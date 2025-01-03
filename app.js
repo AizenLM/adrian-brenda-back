@@ -12,9 +12,15 @@ const MONGO_URI = process.env.MONGO_URI;
 
 // Configuración de CORS: Permitir todos los métodos en local y solo GET en producción
 const corsOptions = {
-  origin: 'https://adrianbrenda.netlify.app', // Permite solo el acceso de tu dominio en producción
-  methods: process.env.NODE_ENV === 'production' ? ['GET'] : ['GET', 'POST', 'PUT', 'DELETE'],  // Solo GET en producción, todos los métodos en local
-  allowedHeaders: ['Content-Type', 'Authorization'],  // Encabezados permitidos
+  origin:
+    process.env.NODE_ENV === 'production'
+      ? 'https://adrianbrenda.netlify.app' // Dominio de producción
+      : 'http://localhost:5173', // Permitir localhost en desarrollo
+  methods:
+    process.env.NODE_ENV === 'production'
+      ? ['GET', 'PATCH'] // Métodos permitidos en producción
+      : ['GET', 'PATCH'], // Métodos permitidos en desarrollo
+  allowedHeaders: ['Content-Type', 'Authorization'], // Encabezados permitidos
 };
 
 mongoose
